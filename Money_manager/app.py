@@ -32,10 +32,13 @@ class MoneyManager:
         insertion = database(goods, price, date)
         return insertion
 
-    def find_expense(self, database, val1, val2):
+    def find_expense(self, database, val1, val2, val3):
         goods = val1.get()
         price = val2.get()
-        find = database(goods, price)
+        date  = val3.get() 
+        find = database(goods, price, date)
+        if find =='' :
+            find = "Khong tim thay giao dich"
         return find
 
     def delete_expense(self,database, val1, val2):
@@ -61,7 +64,7 @@ class MoneyManager:
         button5 = Button(self.frame, text="EXIT", command=exit)
         button5.pack()
 
-    ###thêm giao dịch###
+    ###Cac chuc nang###
     def incomes(self):
 
 
@@ -89,7 +92,7 @@ class MoneyManager:
         B2 = Button(top, text="Hiển thị giao dịch", command=lambda: (text.delete(1.0, END), text.insert(END, self.display_all(db.select_all_incomes()))))
         B2.grid(row=2, column=2)
 
-        B3 = Button(top, text="Tìm giao dịch", command=lambda: (text.delete(1.0, END), text.insert(END, self.find_expense(db.select_incomes, e1,e2))))
+        B3 = Button(top, text="Tìm giao dịch", command=lambda: (text.delete(1.0, END), text.insert(END, self.find_expense(db.select_incomes, e1,e2,e3))))
         B3.grid(row=2, column=3)
 
         B3 = Button(top, text="Xóa giao dịch", command=lambda: (self.delete_expense(db.delete_incomes, e1,e2), self.delete(top)))
@@ -126,7 +129,7 @@ class MoneyManager:
         B2.grid(row=2, column=2)
 
         B3 = Button(top, text="Tìm giao dịch", command=lambda: (
-        text.delete(1.0, END), text.insert(END, self.find_expense(db.select_expenses, e1, e2))))
+        text.delete(1.0, END), text.insert(END, self.find_expense(db.select_expenses, e1, e2,e3))))
         B3.grid(row=2, column=3)
 
         B3 = Button(top, text="Xóa giao dịch",
@@ -164,7 +167,7 @@ class MoneyManager:
         B2.grid(row=2, column=2)
 
         B3 = Button(top, text="Tìm giao dịch", command=lambda: (
-        text.delete(1.0, END), text.insert(END, self.find_expense(db.select_loan, e1, e2))))
+        text.delete(1.0, END), text.insert(END, self.find_expense(db.select_loan, e1, e2,e3))))
         B3.grid(row=2, column=3)
 
         B3 = Button(top, text="Xóa giao dịch",
@@ -202,7 +205,7 @@ class MoneyManager:
         B2.grid(row=2, column=2)
 
         B3 = Button(top, text="Tìm giao dịch", command=lambda: (
-            text.delete(1.0, END), text.insert(END, self.find_expense(db.select_other, e1, e2))))
+            text.delete(1.0, END), text.insert(END, self.find_expense(db.select_other, e1, e2, e3))))
         B3.grid(row=2, column=3)
 
         B3 = Button(top, text="Xóa giao dịch",
