@@ -1,3 +1,5 @@
+from email.mime import message
+from tkinter import messagebox
 import db
 from tkinter import *
 from tkinter.ttk import *
@@ -14,12 +16,11 @@ class MoneyManager:
 
     ### hiển thị các hàm để cập nhật cơ sở dữ liệu và thêm vào hoặc xóa#
     def added(self, boxaile):
-        myLabel = Label(boxaile, text="Giao dịch đã được thêm")
-        myLabel.grid(row=4, column=0)
-
+        messagebox.showinfo("Thông tin giao dịch", "Giao dịch đã được nhập")
+        return
     def delete(self, boxaile):
-        myLabel = Label(boxaile, text="Giao dịch đã bị xóa")
-        myLabel.grid(row=4, column=0)
+        messagebox.showinfo("Thông tin giao dịch", "Giao dịch đã bị xóa")
+        return
 
     def display_all(self, database):
         select_all = database
@@ -86,7 +87,7 @@ class MoneyManager:
 
         #BUTTONS###
 
-        B1 = Button(top, text="Nhập giao dịch", command=lambda: (self.insert(db.insert_incomes,e1,e2,e3), self.added(top)))
+        B1 = Button(top, text="Nhập giao dịch", command=lambda: (text.delete(0.0, END), self.insert(db.insert_incomes,e1,e2,e3), self.added(top)))
         B1.grid(row=1, column=2)
 
         B2 = Button(top, text="Hiển thị giao dịch", command=lambda: (text.delete(1.0, END), text.insert(END, self.display_all(db.select_all_incomes()))))
@@ -95,10 +96,13 @@ class MoneyManager:
         B3 = Button(top, text="Tìm giao dịch", command=lambda: (text.delete(1.0, END), text.insert(END, self.find_expense(db.select_incomes, e1,e2,e3))))
         B3.grid(row=2, column=3)
 
-        B3 = Button(top, text="Xóa giao dịch", command=lambda: (self.delete_expense(db.delete_incomes, e1,e2), self.delete(top)))
+        B3 = Button(top, text="Xóa giao dịch", command=lambda: (text.delete(0.0, END), self.delete_expense(db.delete_incomes, e1,e2), self.delete(top)))
         B3.grid(row=4, column=2)
 
-        B5= Button(top, text="Exit", command=exit)
+        B4 = Button(top, text="Xóa bảng thông tin", command=lambda: (text.delete(0.0, END)))
+        B4.grid(row=3, column=2)
+
+        B5= Button(top, text="Menu chính", command=top.destroy)
         B5.grid(row=4, column=3)
 
 
@@ -122,7 +126,7 @@ class MoneyManager:
         # BUTTONS###
 
         B1 = Button(top, text="Nhập giao dịch",
-                    command=lambda: (self.insert(db.insert_expenses, e1, e2, e3), self.added(top)))
+                    command=lambda: (text.delete(0.0, END), self.insert(db.insert_expenses, e1, e2, e3), self.added(top)))
         B1.grid(row=1, column=2)
 
         B2 = Button(top, text="Hiển thị giao dịch", command=lambda: (text.delete(1.0, END), text.insert(END, self.display_all(db.select_all_expenses()))))
@@ -133,10 +137,13 @@ class MoneyManager:
         B3.grid(row=2, column=3)
 
         B3 = Button(top, text="Xóa giao dịch",
-                    command=lambda: (self.delete_expense(db.delete_expenses, e1, e2), self.delete(top)))
+                    command=lambda: (text.delete(0.0, END), self.delete_expense(db.delete_expenses, e1, e2), self.delete(top)))
         B3.grid(row=4, column=2)
 
-        B5 = Button(top, text="Exit", command=exit)
+        B4 = Button(top, text="Xóa bảng thông tin", command=lambda: (text.delete(0.0, END)))
+        B4.grid(row=3, column=2)
+
+        B5 = Button(top, text="Menu chính", command=top.destroy)
         B5.grid(row=4, column=3)
 
     def loan(self):
@@ -159,7 +166,7 @@ class MoneyManager:
         # BUTTONS###
 
         B1 = Button(top, text="Nhập giao dịch",
-                    command=lambda: (self.insert(db.insert_loan, e1, e2, e3), self.added(top)))
+                    command=lambda: (text.delete(0.0, END), self.insert(db.insert_loan, e1, e2, e3), self.added(top)))
         B1.grid(row=1, column=2)
 
         B2 = Button(top, text="Hiển thị giao dịch", command=lambda: (
@@ -171,10 +178,13 @@ class MoneyManager:
         B3.grid(row=2, column=3)
 
         B3 = Button(top, text="Xóa giao dịch",
-                    command=lambda: (self.delete_expense(db.delete_loan, e1, e2), self.delete(top)))
+                    command=lambda: (text.delete(0.0, END), self.delete_expense(db.delete_loan, e1, e2), self.delete(top)))
         B3.grid(row=4, column=2)
 
-        B5 = Button(top, text="Exit", command=exit)
+        B4 = Button(top, text="Xóa bảng thông tin", command=lambda: (text.delete(0.0, END)))
+        B4.grid(row=3, column=2)
+
+        B5 = Button(top, text="Menu chính", command=top.destroy)
         B5.grid(row=4, column=3)
 
     def other(self):
@@ -197,7 +207,7 @@ class MoneyManager:
         # BUTTONS###
 
         B1 = Button(top, text="Nhập giao dịch",
-                    command=lambda: (self.insert(db.insert_other, e1, e2, e3), self.added(top)))
+                    command=lambda: (text.delete(0.0, END), self.insert(db.insert_other, e1, e2, e3), self.added(top)))
         B1.grid(row=1, column=2)
 
         B2 = Button(top, text="Hiển thị giao dịch", command=lambda: (
@@ -209,10 +219,13 @@ class MoneyManager:
         B3.grid(row=2, column=3)
 
         B3 = Button(top, text="Xóa giao dịch",
-                    command=lambda: (self.delete_expense(db.delete_other, e1, e2), self.delete(top)))
+                    command=lambda: (text.delete(0.0, END), self.delete_expense(db.delete_other, e1, e2), self.delete(top)))
         B3.grid(row=4, column=2)
 
-        B5 = Button(top, text="Exit", command=exit)
+        B4 = Button(top, text="Xóa bảng thông tin", command=lambda: (text.delete(0.0, END)))
+        B4.grid(row=3, column=2)
+        
+        B5 = Button(top, text="Menu chính", command=top.destroy)
         B5.grid(row=4, column=3)
 
 
