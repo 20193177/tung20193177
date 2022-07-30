@@ -20,10 +20,10 @@ SELECT_ALL2 = "SELECT * FROM expenses;"
 SELECT_ALL3 = "SELECT * FROM loan;"
 SELECT_ALL4 = "SELECT * FROM other;"
 
-SELECT_INCOMES = "SELECT * FROM incomes WHERE good = ? AND price = ?;"
-SELECT_EXPENSES = "SELECT * FROM expenses WHERE good = ? AND price = ?;"
-SELECT_LOAN = "SELECT * FROM loan WHERE good = ? AND price = ?;"
-SELECT_OTHER = "SELECT * FROM other WHERE good = ? AND price = ?;"
+SELECT_INCOMES = "SELECT * FROM incomes WHERE good = ? OR price = ? OR date = ?;"
+SELECT_EXPENSES = "SELECT * FROM expenses WHERE good = ? OR price = ? OR date = ?;"
+SELECT_LOAN = "SELECT * FROM loan WHERE good = ? OR price = ? OR date = ?;"
+SELECT_OTHER = "SELECT * FROM other WHERE good = ? OR price = ? OR date = ?;"
 
 DELETE_INCOMES = "DELETE FROM incomes WHERE good = ? AND price = ?;"
 DELETE_EXPENSES = "DELETE FROM expenses WHERE good = ? AND price = ?;"
@@ -34,13 +34,13 @@ DELETE_OTHER = "DELETE FROM other WHERE good = ? AND price = ?;"
 
 
 
-###create for every table###
+###tạo bảng###
 def create_tables():
     conn = sqlite3.connect('data.db')
     with conn:
         return conn.execute(CREATE_OTHER)
 
-###INSERT VALUES###
+###Thêm value###
 
 def insert_incomes(good, price, date):
     conn = sqlite3.connect('data.db')
@@ -48,7 +48,7 @@ def insert_incomes(good, price, date):
         c = conn.cursor()
         c.execute(INSERT_INCOMES, (good, price, date))
         conn.commit()
-
+        c.close()
 
 
 def insert_expenses(good, price, date):
@@ -84,7 +84,6 @@ def select_all_incomes():
     with conn:
         c = conn.cursor()
         c.execute(SELECT_ALL1)
-        #have to store data into a list of Tuple
         list = c.fetchall()
         c.close()
         output = ''
@@ -101,7 +100,6 @@ def select_all_expenses():
     with conn:
         c = conn.cursor()
         c.execute(SELECT_ALL2)
-        # have to store data into a list of Tuple
         list = c.fetchall()
         c.close()
         output = ''
@@ -114,7 +112,6 @@ def select_all_loan():
     with conn:
         c = conn.cursor()
         c.execute(SELECT_ALL3)
-        # have to store data into a list of Tuple
         list = c.fetchall()
         c.close()
         output = ''
@@ -127,7 +124,6 @@ def select_all_other():
     with conn:
         c = conn.cursor()
         c.execute(SELECT_ALL4)
-        # have to store data into a list of Tuple
         list = c.fetchall()
         c.close()
         output = ''
@@ -137,12 +133,11 @@ def select_all_other():
 
 ###SELECT SPECIFIC###
 
-def select_incomes(good, price):
+def select_incomes(good, price, date):
     conn = sqlite3.connect('data.db')
     with conn:
         c = conn.cursor()
-        c.execute(SELECT_INCOMES, (good, price))
-        # have to store data into a list of Tuple
+        c.execute(SELECT_INCOMES, (good, price, date))
         list = c.fetchall()
         c.close()
         output = ''
@@ -150,12 +145,11 @@ def select_incomes(good, price):
             output = output + str(x[1]) + ' ' + str(x[2]) + ' ' + ' ' + str(x[3]) + '\n'
         return output
 
-def select_expenses(good, price):
+def select_expenses(good, price, date):
     conn = sqlite3.connect('data.db')
     with conn:
         c = conn.cursor()
-        c.execute(SELECT_EXPENSES, (good, price))
-        # have to store data into a list of Tuple
+        c.execute(SELECT_EXPENSES, (good, price, date))
         list = c.fetchall()
         c.close()
         output = ''
@@ -163,12 +157,11 @@ def select_expenses(good, price):
             output = output + str(x[1]) + ' ' + str(x[2]) + ' ' + ' ' + str(x[3]) + '\n'
         return output
 
-def select_loan(good, price):
+def select_loan(good, price, date):
     conn = sqlite3.connect('data.db')
     with conn:
         c = conn.cursor()
-        c.execute(SELECT_LOAN, (good, price))
-        # have to store data into a list of Tuple
+        c.execute(SELECT_LOAN, (good, price, date))
         list = c.fetchall()
         c.close()
         output = ''
@@ -176,12 +169,11 @@ def select_loan(good, price):
             output = output + str(x[1]) + ' ' + str(x[2]) + ' ' + ' ' + str(x[3]) + '\n'
         return output
 
-def select_other(good, price):
+def select_other(good, price, date):
     conn = sqlite3.connect('data.db')
     with conn:
         c = conn.cursor()
-        c.execute(SELECT_OTHER, (good, price))
-        # have to store data into a list of Tuple
+        c.execute(SELECT_OTHER, (good, price, date))
         list = c.fetchall()
         c.close()
         output = ''
